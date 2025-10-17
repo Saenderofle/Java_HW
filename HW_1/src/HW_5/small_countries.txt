@@ -1,0 +1,4 @@
+Country[name=Польща, area=312696.0, continent=Європа]
+Country[name=Німеччина, area=357022.0, continent=Європа]
+Country[name=Ватикан, area=0.44, continent=Європа]
+Country[name=Японія, area=377975.0, continent=Азія]
