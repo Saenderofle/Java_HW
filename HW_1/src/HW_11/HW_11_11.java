@@ -1,5 +1,6 @@
 package HW_11;
 
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.format.DateTimeFormatter;
 
 public class HW_11_11 {
 
@@ -44,8 +46,8 @@ public class HW_11_11 {
 
                 // 4. Виведення поточної дати
                 System.out.println("\n--- Прогноз погоди для: " + city.toUpperCase() + " ---");
-                System.out.println("Поточна дата: " + LocalDate.now());
-                System.out.println("------------------------------------------------");
+                LocalDate forecastDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM");
 
                 // 5. Парсинг температур (Макс / Мін)
                 // На сайті формат виглядає як: >10&nbsp;/&nbsp;2&nbsp;°C< або подібне
@@ -63,22 +65,28 @@ public class HW_11_11 {
                 Pattern pattern = Pattern.compile(">(\\-?\\d+)(?:&nbsp;|\\s)*/(?:&nbsp;|\\s)*(\\-?\\d+)(?:&nbsp;|\\s)*°C<");
                 Matcher matcher = pattern.matcher(html);
 
-                int daysFound = 0;
+                int count = 0;
 
                 // прогноз на 2 тижні
-                while (matcher.find() && daysFound < 14) {
+                while (matcher.find() && count < 14) {
                     String maxTemp = matcher.group(1);
                     String minTemp = matcher.group(2);
 
-                    daysFound++;
-                    System.out.printf("День %2d: Макс: %3s°C | Мін: %3s°C%n", daysFound, maxTemp, minTemp);
+                    // Формуємо рядок дати
+                    String dateString = forecastDate.format(formatter);
+
+                    System.out.printf("Дата %s: Макс: %3s°C | Мін: %3s°C%n", dateString, maxTemp, minTemp);
+
+                    // --- ЗМІНА ТУТ: Переходимо до наступного дня ---
+                    forecastDate = forecastDate.plusDays(1);
+                    count++;
                 }
 
-                if (daysFound == 0) {
+                if (count == 0) {
                     System.out.println("Не вдалося знайти дані прогнозу. Можливо, назва міста введена неправильно.");
                 } else {
                     System.out.println("------------------------------------------------");
-                    System.out.println("Всього значень: " + (daysFound * 2) + " (Макс + Мін)");
+                    System.out.println("Всього значень: " + (count * 2) + " (Макс + Мін)");
                 }
 
             } else {

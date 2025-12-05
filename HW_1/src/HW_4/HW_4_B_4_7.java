@@ -166,7 +166,7 @@ class PassengerTrain {
 
 /**
  * Демо клас для демонстрації роботи коду.
- * 
+ *
  */
 class RailwayDemo {
     public static void main(String[] args) {

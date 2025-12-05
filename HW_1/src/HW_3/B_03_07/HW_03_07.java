@@ -20,7 +20,7 @@ public class HW_03_07 {
         return Math.PI * radius * radius;
     }
 
-    
+
     public double getPerimeter() {
         return 2 * Math.PI * radius;
     }
